@@ -7,7 +7,7 @@ type Recipe = {
   id: number;
   name: string;
   ingredients: string;
-  instructions: string;
+  instructions: string[];
   prepTimeMinutes: number;
   cookTimeMinutes: number;
   servings: number;
@@ -96,23 +96,52 @@ const RecipeDetail = () => {
     <div>
       <header className={styles.title_container}>👩‍🍳 천개의 레시피 🥘</header>
       <span>{responseMessage}</span>
-      <div className={styles.recipe_main_container}>
-        <div>
-          <div>
+      <div className={detailStyle.recipe_main_container}>
+        <div className={detailStyle.recipe_main_info}>
+          <div className={detailStyle.image_container}>
             <img src={recipe.image} />
           </div>
-          <div>
-            <div>
-              <span>{recipe.name}</span>
-              <span>{recipe.difficulty}</span>
+          <div className={detailStyle.recipe_main_info_top}>
+            <div className={detailStyle.recipe_nameBox}>
+              <span className={detailStyle.recipe_name}>{recipe.name}</span>
+              <span className={detailStyle.recipe_difficulty}>
+                {recipe.difficulty}
+              </span>
             </div>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span className={detailStyle.recipe_total_time}>
+              총 요리시간 {recipe.prepTimeMinutes + recipe.cookTimeMinutes}분
+            </span>
+            <span>준비시간 {recipe.prepTimeMinutes}분</span>
+            <span>조리시간 {recipe.cookTimeMinutes}분</span>
+            <div className={detailStyle.recipe_tag_container}>
+              {recipe.tags.map((tag, index) => (
+                <div key={index} className={detailStyle.recipe_tagBox}>
+                  {tag}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div></div>
-        <div></div>
+        <div className={detailStyle.recipe_ingredients_container}>
+          <h3>필요한 재료</h3>
+          <span>{recipe.ingredients}</span>
+        </div>
+        <div className={detailStyle.recipe_instructions_container}>
+          <h3>레시피</h3>
+          <ol>
+            {recipe.instructions.map((instruction, index) => (
+              <li key={index}>{instruction}</li>
+            ))}
+          </ol>
+        </div>
+        <div className={detailStyle.recipe_extra_container}>
+          <h3>요리정보</h3>
+          <span>유형: {recipe.cuisine}</span>
+          <span>음식특징: {recipe.mealType.join(", ")}</span>
+          <span>칼로리: {recipe.caloriesPerServing}</span>
+          <span>평균 만족도: {recipe.rating}</span>
+          <span>리뷰 작성 수: {recipe.reviewCount}</span>
+        </div>
       </div>
     </div>
   );
