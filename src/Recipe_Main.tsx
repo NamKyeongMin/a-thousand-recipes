@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import styles from "./App.module.css";
+import { useNavigate } from "react-router-dom";
+import styles from "./Recipe_Main.module.css";
 
 type Recipe = {
   id: number;
@@ -58,7 +59,7 @@ const api = async <TData,>({
   };
 };
 
-const App = () => {
+const RecipeMain = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [responseMessage, setResponseMessage] = useState("");
@@ -67,6 +68,7 @@ const App = () => {
   const FirstRecipe = LastRecipe - recipesPerPage;
   const currentPageRecipes = recipes.slice(FirstRecipe, LastRecipe);
   const totalPages = Math.ceil(recipes.length / recipesPerPage);
+  const navigate = useNavigate();
 
   const fetchRecipe = () => {
     api<{
@@ -101,7 +103,11 @@ const App = () => {
       <div className={styles.recipe_main_container}>
         <div className={styles.recipe_list}>
           {currentPageRecipes.map((recipe) => (
-            <div className={styles.recipe_container} key={recipe.id}>
+            <div
+              className={styles.recipe_container}
+              key={recipe.id}
+              onClick={() => navigate(`/recipe/${recipe.id}`)}
+            >
               <div className={styles.recipe_img}>
                 <img src={recipe.image} alt="레시피 이미지" />
               </div>
@@ -139,4 +145,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default RecipeMain;
