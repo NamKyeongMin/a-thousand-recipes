@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import styles from "./Recipe_Main.module.css";
 import detailStyle from "./Recipe_Detail.module.css";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Recipe = {
   id: number;
   name: string;
-  ingredients: string;
+  ingredients: string[];
   instructions: string[];
   prepTimeMinutes: number;
   cookTimeMinutes: number;
@@ -64,6 +65,7 @@ const RecipeDetail = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [responseMessage, setResponseMessage] = useState("");
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetchRecipe = () => {
     if (!id) return;
@@ -97,6 +99,12 @@ const RecipeDetail = () => {
       <header className={styles.title_container}>👩‍🍳 천개의 레시피 🥘</header>
       <span>{responseMessage}</span>
       <div className={detailStyle.recipe_main_container}>
+        <button
+          className={detailStyle.detail_homeBtn}
+          onClick={() => navigate(`/`)}
+        >
+          Home
+        </button>
         <div className={detailStyle.recipe_main_info}>
           <div className={detailStyle.image_container}>
             <img src={recipe.image} />
@@ -124,7 +132,7 @@ const RecipeDetail = () => {
         </div>
         <div className={detailStyle.recipe_ingredients_container}>
           <h3>필요한 재료</h3>
-          <span>{recipe.ingredients}</span>
+          <span>{recipe.ingredients.join(" | ")}</span>
         </div>
         <div className={detailStyle.recipe_instructions_container}>
           <h3>레시피</h3>

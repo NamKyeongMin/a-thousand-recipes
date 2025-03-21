@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Recipe_Main.module.css";
+import "./reset.css";
 
 type Recipe = {
   id: number;

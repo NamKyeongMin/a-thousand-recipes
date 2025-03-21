@@ -13,9 +13,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50px;
   border-bottom: 2px solid #d8d8d8;
-  padding-block: 10px;
+  padding-block: 20px;
 }
 .recipe_main_container {
   height: 800px;
